@@ -7,28 +7,18 @@
 #++
 
 
-require_relative 'base_afilias2'
-
+require_relative 'base_afilias3'
+require 'whois/scanners/whois.afilias.net.rb'
 
 module Whois
   class Parsers
 
     # Parser for the whois.afilias.net server.
-    class WhoisAfiliasNet < BaseAfilias2
+    class WhoisAfiliasNet < BaseAfilias3
 
-      self.scanner = Scanners::BaseAfilias, {
-          pattern_disclaimer: /^Access to/,
+      self.scanner = Scanners::WhoisAfiliasNet, {
           pattern_reserved: /^(Name is reserved by afilias\n)|(Reserved by Registry\n)/,
       }
-
-
-      property_supported :status do
-        if reserved?
-          :reserved
-        else
-          super()
-        end
-      end
 
       # NEWPROPERTY
       def reserved?
